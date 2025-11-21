@@ -1,8 +1,11 @@
-import Index from ".";
-export default function Home() {
+import React from "react";
+import Navbar from "@/components/Navigation";
+
+const Home = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <Index />
+    <div>
+      <Navbar />
     </div>
   );
-}
+};
+export default Home;
