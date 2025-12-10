@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, ShieldCheck, Wallet, ArrowRight } from "lucide-react";
+import { Zap, ShieldCheck, Wallet} from "lucide-react";
 import Section from "./Section";
 
 const benefits = [
