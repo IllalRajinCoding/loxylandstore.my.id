@@ -17,9 +17,9 @@ export default function Section({
     const baseStyles = "relative overflow-hidden rounded-3xl";
 
     const variantStyles = {
-        default: " border-stone-800/30 bg-stone-950/40 backdrop-blur-xl",
-        elevated: " border-stone-800/40 bg-gradient-to-br from-stone-950/60 via-stone-900/40 to-stone-950/60 backdrop-blur-2xl shadow-2xl shadow-black/20",
-        glass: " border-stone-700/20 bg-stone-900/20 backdrop-blur-2xl shadow-xl shadow-stone-900/10",
+        default: "bg-stone-950/40 backdrop-blur-xl",
+        elevated: "bg-gradient-to-br from-stone-950/60",
+        glass: "bg-stone-900/20 backdrop-blur-2xl",
     };
 
     return (

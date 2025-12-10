@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import {
-  Search,
   Trophy,
-  Receipt,
   Menu,
   X,
+  ShoppingCart,
+  Home,
 } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
@@ -18,10 +17,9 @@ export default function Navbar() {
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
-  const isLoggedIn = false;
-
   const navLinks = [
-    { href: "/transaction", label: "Transaksi", icon: Receipt },
+    { href: "/", label: "Home", icon: Home },
+    { href: "/product", label: "Product", icon: ShoppingCart },
     { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
   ];
 
@@ -59,36 +57,26 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 mx-4 mt-4 will-change-transform transition-transform duration-500 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
-          }`}
+        className={`fixed top-0 left-0 right-0 z-50 mx-4 mt-4 will-change-transform transition-transform duration-500 ease-in-out ${
+          isVisible ? "translate-y-0" : "-translate-y-full"
+        }`}
       >
         <div className="mx-auto max-w-6xl rounded-2xl border border-stone-900/80 bg-stone-950/85 text-stone-100 backdrop-blur-2xl">
           <div className="flex h-16 items-center justify-between px-4">
+            {/* Logo Section */}
             <Link href="/" className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-stone-100 text-stone-900 font-semibold">
-                TU
-              </div>
-              <div className="hidden flex-col leading-tight sm:flex">
+              {/* PERUBAHAN DISINI: menghapus 'hidden' dan 'sm:flex' */}
+              <div className="flex flex-col leading-tight">
                 <span className="text-xs font-semibold uppercase tracking-[0.35em] text-stone-400">
-                  Topup.Unit
-                </span>
-                <span className="text-[11px] text-stone-500">
-                  Suite orkestrasi saldo
+                  Loxyland Store
                 </span>
               </div>
             </Link>
 
-            <div className="hidden flex-1 px-6 md:block">
-              <div className="relative">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-500" />
-                <Input
-                  type="text"
-                  placeholder="Cari..."
-                  className="h-10 rounded-2xl border-stone-900 bg-stone-900/70 pl-10 text-stone-100 placeholder:text-stone-500"
-                />
-              </div>
-            </div>
+            {/* Spacer to push nav links to the right */}
+            <div className="hidden flex-1 md:block" />
 
+            {/* Desktop Navigation */}
             <div className="hidden items-center gap-1 md:flex">
               {navLinks.map((item) => (
                 <Button
@@ -104,27 +92,9 @@ export default function Navbar() {
                   </Link>
                 </Button>
               ))}
-
-              {isLoggedIn && (
-                <Button
-                  size="sm"
-                  className="rounded-full bg-stone-100 px-5 text-stone-900 transition hover:-translate-y-0.5 hover:bg-stone-200"
-                  asChild
-                >
-                  <Link href="/dashboard">Masuk dashboard</Link>
-                </Button>
-              )}
-              {!isLoggedIn && (
-               <Button
-                  size="sm"
-                  className="rounded-full bg-stone-100 px-5 text-stone-900 transition hover:-translate-y-0.5 hover:bg-stone-200"
-                  asChild
-                >
-                  <Link href="/login">Login</Link>
-                </Button>
-              )}
             </div>
 
+            {/* Mobile Menu Toggle */}
             <Button
               variant="ghost"
               size="icon"
@@ -137,9 +107,10 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Spacer untuk mencegah content terpotong */}
+      {/* Spacer agar konten di bawah navbar tidak tertutup saat load awal */}
       <div className="h-20" />
 
+      {/* Mobile Menu Backdrop */}
       {mobileMenuOpen && (
         <button
           type="button"
@@ -147,24 +118,17 @@ export default function Navbar() {
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
-        
       )}
 
+      {/* Mobile Menu Dropdown */}
       <div
-        className={`fixed left-0 right-0 z-50 mx-auto max-w-6xl px-4 transition-all duration-300 md:hidden ${mobileMenuOpen ? "top-20 opacity-100" : "top-10 -mt-8 opacity-0 pointer-events-none"
-          }`}
+        className={`fixed left-0 right-0 z-50 mx-auto max-w-6xl px-4 transition-all duration-300 md:hidden ${
+          mobileMenuOpen
+            ? "top-20 opacity-100"
+            : "top-10 -mt-8 opacity-0 pointer-events-none"
+        }`}
       >
         <div className="rounded-3xl border border-stone-900 bg-stone-950/95 p-5 shadow-2xl shadow-black/60">
-          <div className="relative mb-4">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-500" />
-            
-            <Input
-              type="text"
-              placeholder="Cari..."
-              className="h-11 rounded-2xl border-stone-900 bg-stone-900/70 pl-10 text-stone-100 placeholder:text-stone-500"
-            />
-          </div>
-
           <div className="space-y-2">
             {navLinks.map((item) => (
               <Link
@@ -178,25 +142,6 @@ export default function Navbar() {
               </Link>
             ))}
           </div>
-
-          {isLoggedIn && (
-          <Button
-            className="mt-4 w-full rounded-2xl bg-stone-100 text-stone-900 hover:-translate-y-0.5 hover:bg-stone-200"
-            asChild
-          >
-            <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-              Masuk dashboard
-            </Link>
-          </Button>
-          )}
-          {!isLoggedIn && (
-            <Button
-              className="mt-4 w-full rounded-2xl bg-stone-100 text-stone-900 hover:-translate-y-0.5 hover:bg-stone-200"
-              asChild
-            >
-              <Link href="/login" onClick={() => setMobileMenuOpen(false)}>Login</Link>
-            </Button>
-          )}
         </div>
       </div>
     </>
